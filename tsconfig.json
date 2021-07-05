@@ -25,7 +25,8 @@
       "src": ["./src"],
       "src/*": ["./src/*"],
       "common": ["./src/common"],
-      "common/*": ["./src/common/*"]
+      "common/*": ["./src/common/*"],
+      "tslib": ["./node_modules/tslib/tslib.d.ts"]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

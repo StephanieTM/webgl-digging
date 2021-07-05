@@ -35,6 +35,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/threejs/creating-a-scene',
         component: (): ILoadComponent => import('src/components/threejs/creating-a-scene'),
       },
+      {
+        title: 'Drawing a line',
+        link: '/threejs/drawing-a-line',
+        component: (): ILoadComponent => import('src/components/threejs/drawing-lines'),
+      },
     ],
   },
 ];
