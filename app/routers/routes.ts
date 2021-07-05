@@ -40,6 +40,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/threejs/drawing-a-line',
         component: (): ILoadComponent => import('src/components/threejs/drawing-lines'),
       },
+      {
+        title: 'Update BufferGeometry',
+        link: '/threejs/update-buffer-geometry',
+        component: (): ILoadComponent => import('src/components/threejs/update-buffer-geometry'),
+      },
     ],
   },
 ];
