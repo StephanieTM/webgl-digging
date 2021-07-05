@@ -27,13 +27,13 @@ const pcRoutes: IRouteConfig[] = [
     ],
   },
   {
-    title: 'Backend Demo',
-    code: 'backend-demo',
+    title: 'Three.JS',
+    code: 'three.js',
     children: [
       {
-        title: 'User',
-        link: '/backend-demo/user',
-        component: (): ILoadComponent => import('src/components/backendDemo/User'),
+        title: 'Creating a scene',
+        link: '/threejs/creating-a-scene',
+        component: (): ILoadComponent => import('src/components/threejs/creating-a-scene'),
       },
     ],
   },
