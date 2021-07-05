@@ -1375,6 +1375,11 @@
   resolved "https://registry.npmjs.org/@types/tapable/-/tapable-1.0.6.tgz#a9ca4b70a18b270ccb2bc0aaafefd1d486b7ea74"
   integrity sha512-W+bw9ds02rAQaMvaLYxAbJ6cvguW/iJXNT6lTssS1ps6QdrMKttqEAMEG/b5CR8TZl3/L7/lH0ZV5nNR1LXikA==
 
+"@types/three@^0.129.2":
+  version "0.129.2"
+  resolved "https://registry.npmjs.org/@types/three/-/three-0.129.2.tgz#26d9e4ecffc8e31becfb119c494123f343f31f8f"
+  integrity sha512-fZDNRtUFnq3baNjDiAzi4QoHYcczWtEdsduH/tpiwk91fbVk8COJiT/iLoN3tIOjLKMySoYsjUfP0VTmUfZKLw==
+
 "@types/uglify-js@*":
   version "3.13.0"
   resolved "https://registry.npmjs.org/@types/uglify-js/-/uglify-js-3.13.0.tgz#1cad8df1fb0b143c5aba08de5712ea9d1ff71124"
@@ -7742,6 +7747,11 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npm.taobao.org/text-table/download/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
+
+three@^0.130.0:
+  version "0.130.0"
+  resolved "https://registry.nlark.com/three/download/three-0.130.0.tgz?cache=0&sync_timestamp=1625055911008&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fthree%2Fdownload%2Fthree-0.130.0.tgz#43778a96366fa5e3d1da28c688e8a2bfd8b42aab"
+  integrity sha1-Q3eKljZvpePR2ijGiOiiv9i0Kqs=
 
 throttle-debounce@^3.0.1:
   version "3.0.1"
