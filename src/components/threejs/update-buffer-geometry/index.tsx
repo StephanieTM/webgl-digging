@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useScene, useRender } from '../hooks';
 
@@ -6,10 +6,11 @@ const width = 1000;
 const height = 600;
 const MAX_POINTS = 500;
 const INIT_DRAW_COUNT = 2;
-let drawCount = INIT_DRAW_COUNT;
 
 export default function Comp(): JSX.Element {
   const playground = useRef<HTMLDivElement>(null);
+  const drawCount = useRef<number>(INIT_DRAW_COUNT);
+  const [rerender, setRerender] = useState(false);
   const { scene, camera, renderer } = useScene({
     cameraConfig: {
       init: [45, width / height, 1, 600],
@@ -24,11 +25,11 @@ export default function Comp(): JSX.Element {
   const material = useRef<THREE.LineBasicMaterial>(new THREE.LineBasicMaterial({ color: '#33dd99' }));
   const line = useRef<THREE.Line>(new THREE.Line(geometry.current, material.current));
   const renderFunc = useCallback(() => {
-    drawCount = ( drawCount + 1 ) % MAX_POINTS;
+    drawCount.current = ( drawCount.current + 1 ) % MAX_POINTS;
 
-    line.current.geometry.setDrawRange( 0, drawCount );
+    line.current.geometry.setDrawRange( 0, drawCount.current );
 
-    if ( drawCount === 0 ) {
+    if ( drawCount.current === 0 ) {
 
       // periodically, generate new data
 
@@ -83,6 +84,7 @@ export default function Comp(): JSX.Element {
   return (
     <div>
       <div ref={playground}></div>
+      <button onClick={() => setRerender(!rerender)}>Rerender</button>
     </div>
   );
 }
