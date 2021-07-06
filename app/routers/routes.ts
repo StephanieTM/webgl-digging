@@ -22,7 +22,7 @@ const pcRoutes: IRouteConfig[] = [
       {
         title: 'Hello World',
         link: '/',
-        component: (): ILoadComponent => import('src/components/helloWorld'),
+        component: (): ILoadComponent => import('src/components/homepage'),
       },
     ],
     hideInMenu: true,
@@ -74,7 +74,7 @@ const mobileRoutes: IRouteConfig[] = [
       {
         title: 'Hello World',
         link: '/',
-        component: (): ILoadComponent => import('src/components/helloWorld'),
+        component: (): ILoadComponent => import('src/components/homepage'),
       },
     ],
   },

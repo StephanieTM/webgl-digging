@@ -12,8 +12,8 @@ export default function Comp(): JSX.Element {
   const drawCount = useRef<number>(INIT_DRAW_COUNT);
   const { scene, camera, renderer } = useScene({
     cameraConfig: {
-      init: [45, width / height, 1, 600],
-      position: [0, 0, 500],
+      init: [75, width / height, 1, 1000],
+      position: [0, 0, 900],
       lookAt: [0, 0, 0],
     },
     rendererConfig: {
