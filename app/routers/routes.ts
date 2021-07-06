@@ -25,6 +25,7 @@ const pcRoutes: IRouteConfig[] = [
         component: (): ILoadComponent => import('src/components/helloWorld'),
       },
     ],
+    hideInMenu: true,
   },
   {
     title: 'Three.JS',

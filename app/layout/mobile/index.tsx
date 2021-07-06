@@ -2,15 +2,17 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Spin } from 'antd';
 import { IRouteConfig } from 'app/routers/routes';
+import { getRoutes } from 'app/layout/utils';
 import Footer from './Footer';
 import './index.less';
 
 interface IMobileLayoutProps {
-  routes: IRouteConfig[];
+  menus: IRouteConfig[];
 }
 
 export default function Layout(props: IMobileLayoutProps): JSX.Element {
-  const { routes } = props;
+  const { menus } = props;
+  const routes = getRoutes(menus);
 
   return (
     <div className="app-container">
