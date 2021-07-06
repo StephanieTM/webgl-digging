@@ -109,3 +109,18 @@ export function getMenuKey({ children, title, link }: IRouteConfig, appCode = ''
   }
   return `${appCode}-${title}`;
 }
+
+export function getRoutes(allRouters: IRouteConfig[]): IRouteConfig[] {
+  const getFlattenRoutes = (routeItem: IRouteConfig[] = allRouters, result: IRouteConfig[] = []): IRouteConfig[] => {
+    routeItem.forEach(item => {
+      if (item.children) {
+        result.concat(getFlattenRoutes(item.children, result));
+      } else {
+        result.push(item);
+      }
+    });
+    return result;
+  };
+
+  return getFlattenRoutes();
+}

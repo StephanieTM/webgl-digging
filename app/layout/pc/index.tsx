@@ -2,17 +2,18 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Spin } from 'antd';
 import { IRouteConfig } from 'app/routers/routes';
+import { getRoutes } from 'app/layout/utils';
 import Header from './Header';
+import Menu from './Menu';
 import './index.less';
 
 interface IPCLayoutProps {
-  routes: IRouteConfig[];
+  menus: IRouteConfig[];
 }
 
 export default function Layout(props: IPCLayoutProps): JSX.Element {
-  const { routes } = props;
-
-  console.log('routes :>> ', routes);
+  const { menus } = props;
+  const routes = getRoutes(menus);
 
   return (
     <div className="app-container">
@@ -20,7 +21,7 @@ export default function Layout(props: IPCLayoutProps): JSX.Element {
       <div className="app-body">
         <div className="app-menu">
           <div>
-            menus
+            <Menu menus={menus} />
           </div>
         </div>
         <div className="app-content">
