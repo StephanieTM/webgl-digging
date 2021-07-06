@@ -46,6 +46,11 @@ const pcRoutes: IRouteConfig[] = [
         link: '/threejs/update-buffer-geometry',
         component: (): ILoadComponent => import('src/components/threejs/update-buffer-geometry'),
       },
+      {
+        title: 'Use Post-processing',
+        link: '/threejs/use-post-processing',
+        component: (): ILoadComponent => import('src/components/threejs/use-post-processing'),
+      },
     ],
   },
 ];
