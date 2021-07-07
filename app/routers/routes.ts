@@ -22,7 +22,7 @@ const pcRoutes: IRouteConfig[] = [
       {
         title: 'Hello World',
         link: '/',
-        component: (): ILoadComponent => import('src/components/helloWorld'),
+        component: (): ILoadComponent => import('src/components/homepage'),
       },
     ],
     hideInMenu: true,
@@ -45,6 +45,11 @@ const pcRoutes: IRouteConfig[] = [
         title: 'Update BufferGeometry',
         link: '/threejs/update-buffer-geometry',
         component: (): ILoadComponent => import('src/components/threejs/update-buffer-geometry'),
+      },
+      {
+        title: 'Use Post-processing',
+        link: '/threejs/use-post-processing',
+        component: (): ILoadComponent => import('src/components/threejs/use-post-processing'),
       },
     ],
   },
@@ -69,7 +74,7 @@ const mobileRoutes: IRouteConfig[] = [
       {
         title: 'Hello World',
         link: '/',
-        component: (): ILoadComponent => import('src/components/helloWorld'),
+        component: (): ILoadComponent => import('src/components/homepage'),
       },
     ],
   },
