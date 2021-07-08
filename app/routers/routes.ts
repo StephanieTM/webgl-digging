@@ -53,6 +53,17 @@ const pcRoutes: IRouteConfig[] = [
       },
     ],
   },
+  {
+    title: 'Demos',
+    code: 'demos',
+    children: [
+      {
+        title: 'Sierpinski',
+        link: '/demos/sierpinski',
+        component: (): ILoadComponent => import('src/components/demos/sierpinski'),
+      },
+    ],
+  },
 ];
 
 const mobileRoutes: IRouteConfig[] = [
