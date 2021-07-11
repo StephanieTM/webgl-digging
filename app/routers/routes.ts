@@ -58,9 +58,14 @@ const pcRoutes: IRouteConfig[] = [
     code: 'demos',
     children: [
       {
-        title: 'Sierpinski',
-        link: '/demos/sierpinski',
-        component: (): ILoadComponent => import('src/components/demos/sierpinski'),
+        title: 'Sierpinski 2d (points)',
+        link: '/demos/sierpinski-2d-points',
+        component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-points'),
+      },
+      {
+        title: 'Sierpinski 2d (lines)',
+        link: '/demos/sierpinski-2d-lines',
+        component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-lines'),
       },
     ],
   },
