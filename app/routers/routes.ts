@@ -53,6 +53,22 @@ const pcRoutes: IRouteConfig[] = [
       },
     ],
   },
+  {
+    title: 'Demos',
+    code: 'demos',
+    children: [
+      {
+        title: 'Sierpinski 2d (points)',
+        link: '/demos/sierpinski-2d-points',
+        component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-points'),
+      },
+      {
+        title: 'Sierpinski 2d (lines)',
+        link: '/demos/sierpinski-2d-lines',
+        component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-lines'),
+      },
+    ],
+  },
 ];
 
 const mobileRoutes: IRouteConfig[] = [
