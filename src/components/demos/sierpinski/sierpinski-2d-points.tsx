@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { add, IVec3, scale, vec3 } from 'src/components/mvjs/lib';
+import { add, IVec3, scale, vec3 } from 'src/lib/mvjs';
 import { useScene, useRender } from 'src/components/threejs/hooks';
 import { randomHexColor } from 'src/utils';
 

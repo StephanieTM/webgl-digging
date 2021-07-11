@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useRender, useScene } from 'src/components/threejs/hooks';
-import { vec3, IVec3, scale, add } from 'src/components/mvjs/lib';
+import { vec3, IVec3, scale, add } from 'src/lib/mvjs';
 
 const width = 1000;
 const height = 600;

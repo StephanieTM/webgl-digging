@@ -13,8 +13,7 @@ export function _argumentsToArray<T extends unknown[]>(args: T): number[] {
  * @returns 弧度
  */
 export function radians(degrees: number): number {
-  const Pi = 3.1415926535897932384626433;
-  return degrees * Pi / 180.0;
+  return degrees * Math.PI / 180.0;
 }
 
 
