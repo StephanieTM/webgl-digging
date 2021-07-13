@@ -79,6 +79,10 @@ module.exports = {
           filename: 'assets/fonts/[hash][ext][query]',
         },
       },
+      {
+        test: /\.(glsl)$/,
+        use: ['./tools/glsl-loader'],
+      },
     ],
   },
   resolve: {

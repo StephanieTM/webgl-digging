@@ -51,21 +51,38 @@ const pcRoutes: IRouteConfig[] = [
         link: '/threejs/use-post-processing',
         component: (): ILoadComponent => import('src/components/threejs/use-post-processing'),
       },
+      {
+        title: 'Demos',
+        code: 'threejs-demos',
+        children: [
+          {
+            title: 'Sierpinski 2d (points)',
+            link: '/threejs/demos/sierpinski-2d-points',
+            component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-points'),
+          },
+          {
+            title: 'Sierpinski 2d (lines)',
+            link: '/threejs/demos/sierpinski-2d-lines',
+            component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-lines'),
+          },
+        ],
+      },
     ],
   },
   {
-    title: 'Demos',
-    code: 'demos',
+    title: 'Original WebGL',
+    code: 'original-webgl',
     children: [
       {
-        title: 'Sierpinski 2d (points)',
-        link: '/demos/sierpinski-2d-points',
-        component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-points'),
-      },
-      {
-        title: 'Sierpinski 2d (lines)',
-        link: '/demos/sierpinski-2d-lines',
-        component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-lines'),
+        title: 'Demos',
+        code: 'original-webgl-demos',
+        children: [
+          {
+            title: 'Sierpinski 2d (points)',
+            link: '/original-webgl/sierpinski-2d-points',
+            component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-2d-points'),
+          },
+        ],
       },
     ],
   },

@@ -6,9 +6,9 @@ export type IMatrix3 = [IVec3, IVec3, IVec3];
 export type IMatrix4 = [IVec4, IVec4, IVec4, IVec4];
 
 export type IMat = IMat2 | IMat3 | IMat4;
-interface IMat2 extends IMatrix2 { matrix: boolean }
-interface IMat3 extends IMatrix3 { matrix: boolean }
-interface IMat4 extends IMatrix4 { matrix: boolean }
+export interface IMat2 extends IMatrix2 { matrix: boolean }
+export interface IMat3 extends IMatrix3 { matrix: boolean }
+export interface IMat4 extends IMatrix4 { matrix: boolean }
 
 /**
  * 由数据生成二维矩阵

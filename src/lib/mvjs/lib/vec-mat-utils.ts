@@ -226,3 +226,40 @@ export function mult<T extends IVec|IMat>(u: T, v: T): T {
   }
 }
 
+// -------------------------------------------------------------------------------------------------
+
+/**
+ * 将向量/矩阵展开并存储在Float32Array中
+ * @param v 向量/矩阵
+ * @returns Float32Array
+ */
+export function flatten(v: IMat|IVec): Float32Array {
+  if ((v as IMat).matrix === true) {
+    // TODO
+    // v = transpose(v);
+  }
+
+  let n = v.length;
+  let elemsAreArrays = false;
+
+  if (Array.isArray(v[0])) {
+    elemsAreArrays = true;
+    n *= v[0].length;
+  }
+
+  const floats = new Float32Array(n);
+  if (elemsAreArrays) {
+    let idx = 0;
+    for (let i = 0; i < v.length; i += 1) {
+      for (let j = 0; j < (v as IMat)[i].length; j += 1) {
+        floats[idx++] = v[i][j];
+      }
+    }
+  } else {
+    for (let i = 0; i < v.length; i += 1) {
+      floats[i] = (v as IVec)[i];
+    }
+  }
+
+  return floats;
+}
