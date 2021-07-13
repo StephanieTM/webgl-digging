@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 const GET_A_WEBGL_BROWSER = 'This page requires a browser that supports WebGL.';
-const OTHER_PROBLEM = 'It doesn\'t appear your computer can support WebGL.';
 
-export function useWebGL(canvas: React.RefObject<HTMLCanvasElement>, opts?: WebGLContextAttributes): WebGLRenderingContext|null {
+export function useWebGL(canvas: React.RefObject<HTMLCanvasElement>, opts?: WebGLContextAttributes): WebGLRenderingContext | null {
   const context = use3DContext(canvas, opts);
 
   useEffect(() => {
-    if (canvas.current) {
+    if (canvas.current && context) {
       if (!window.WebGLRenderingContext) {
         console.error(GET_A_WEBGL_BROWSER);
-      } else if (!context) {
-        console.error(OTHER_PROBLEM);
       }
     }
   }, [canvas, context]);
