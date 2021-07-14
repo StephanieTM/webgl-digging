@@ -82,6 +82,11 @@ const pcRoutes: IRouteConfig[] = [
             link: '/original-webgl/sierpinski-2d-points',
             component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-2d-points'),
           },
+          {
+            title: 'Sierpinski 2d (lines)',
+            link: '/original-webgl/sierpinski-2d-lines',
+            component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-2d-lines'),
+          },
         ],
       },
     ],

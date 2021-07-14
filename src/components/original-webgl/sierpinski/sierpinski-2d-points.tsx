@@ -3,7 +3,6 @@ import { useWebGL, useShaders } from 'src/components/original-webgl/hooks';
 import { vec2, add, scale, flatten, IMat2 } from 'src/lib/mvjs';
 import vShader from './shaders/2d-points/vshader.glsl';
 import fShader from './shaders/2d-points/fshader.glsl';
-import './index.less';
 
 const NumPoints = 5000;
 const vertices = [
@@ -32,7 +31,7 @@ export default function Comp(): JSX.Element {
       }
 
       gl.viewport(0, 0, canvasRef.current.width, canvasRef.current.height);
-      gl.clearColor(0, 0, 0, 1);
+      gl.clearColor(1, 1, 1, 1);
 
       gl.useProgram(program);
 
@@ -50,8 +49,8 @@ export default function Comp(): JSX.Element {
   }, [gl, program]);
 
   return (
-    <div className="origin-webgl-sierpinski">
-      <canvas className="canvas" ref={canvasRef}></canvas>
+    <div style={{ padding: '20px' }}>
+      <canvas ref={canvasRef} width="512" height="512"></canvas>
     </div>
   );
 }
