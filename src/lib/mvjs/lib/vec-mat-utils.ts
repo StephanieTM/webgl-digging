@@ -233,7 +233,7 @@ export function mult<T extends IVec|IMat>(u: T, v: T): T {
  * @param v 向量/矩阵
  * @returns Float32Array
  */
-export function flatten(v: IMat|IVec): Float32Array {
+export function flatten(v: IMat|IVec|IVec[]): Float32Array {
   if ((v as IMat).matrix === true) {
     // TODO
     // v = transpose(v);
