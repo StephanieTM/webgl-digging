@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 interface ISceneConfig {
@@ -9,6 +9,7 @@ interface ISceneConfig {
   };
   rendererConfig?: {
     size?: [width: number, height: number, updateStyle?: boolean];
+    clearColor?: [color: string | number | THREE.Color, alpha?: number | undefined];
   };
 }
 
@@ -54,7 +55,8 @@ export function useScene(configs: ISceneConfig = {}): IScene {
 
   useEffect(() => {
     callIfConfigExists(renderer.current.setSize.bind(renderer.current), rendererConfig?.size);
-  }, [rendererConfig?.size]);
+    callIfConfigExists(renderer.current.setClearColor.bind(renderer.current), rendererConfig?.clearColor);
+  }, [rendererConfig?.clearColor, rendererConfig?.size]);
 
   return {
     scene,

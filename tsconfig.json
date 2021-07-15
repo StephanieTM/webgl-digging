@@ -38,7 +38,9 @@
     "pretty": true,
     "importHelpers": true
   },
-  "exclude": [],
+  "exclude": [
+    "./node_modules"
+  ],
   "include": [
     "./app",
     "./src",
