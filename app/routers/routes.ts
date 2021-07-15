@@ -65,6 +65,11 @@ const pcRoutes: IRouteConfig[] = [
             link: '/threejs/demos/sierpinski-2d-lines',
             component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-lines'),
           },
+          {
+            title: 'Swap cards',
+            link: '/threejs/demos/swap-cards',
+            component: (): ILoadComponent => import('src/components/threejs/swap-cards'),
+          },
         ],
       },
     ],
