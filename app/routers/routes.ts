@@ -102,6 +102,11 @@ const pcRoutes: IRouteConfig[] = [
             link: '/original-webgl/sierpinski-3d-lines',
             component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-3d-lines'),
           },
+          {
+            title: 'Rotating Square',
+            link: '/original-webgl/rotating-square',
+            component: (): ILoadComponent => import('src/components/original-webgl/rotating-square'),
+          },
         ],
       },
     ],
