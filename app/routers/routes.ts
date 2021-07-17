@@ -92,6 +92,21 @@ const pcRoutes: IRouteConfig[] = [
             link: '/original-webgl/sierpinski-2d-lines',
             component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-2d-lines'),
           },
+          {
+            title: 'Sierpinski 3d (points)',
+            link: '/original-webgl/sierpinski-3d-points',
+            component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-3d-points'),
+          },
+          {
+            title: 'Sierpinski 3d (lines)',
+            link: '/original-webgl/sierpinski-3d-lines',
+            component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-3d-lines'),
+          },
+          {
+            title: 'Rotating Square',
+            link: '/original-webgl/rotating-square',
+            component: (): ILoadComponent => import('src/components/original-webgl/rotating-square'),
+          },
         ],
       },
     ],
