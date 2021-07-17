@@ -33,7 +33,7 @@ export class Card {
   }
 
   private initMesh(): void {
-    const geometry = new THREE.BoxGeometry(1.5, 1.5, 0.0001);
+    const geometry = new THREE.BoxGeometry(1, 1.4, 0.0001);
     const texture = new THREE.TextureLoader().load(cardImg);
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     texture.anisotropy = 16;
@@ -49,15 +49,15 @@ export class Card {
     const text = `${this.number}`;
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-    const textWidth = 100;
-    const textHeight = 100;
+    const textWidth = 140;
+    const textHeight = 140;
     canvas.width = textWidth;
     canvas.height = textHeight;
-    context.font = `normal 600 ${textWidth}px monospace`;
-    context.textAlign = 'center';
+    context.font = `normal 600 ${120}px monospace`;
+    context.textAlign = 'left';
     context.textBaseline = 'middle';
     context.fillStyle = '#f881aa';
-    context.fillText(text, textWidth/2, textHeight/2);
+    context.fillText(text, 30, textHeight/2);
     const texture = new THREE.Texture(canvas);
     texture.needsUpdate = true;
     const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
@@ -75,7 +75,7 @@ export class Card {
   }
 
   scaleUp(): void {
-    this.object.scale.set(1.05, 1.05, 1.05);
+    this.object.scale.set(1.05, 1.05, 1);
   }
 
   scaleDown(): void {
@@ -84,10 +84,12 @@ export class Card {
 
   doRaycaster(): void {
     const intersects = this.raycaster.current.intersectObjects(this.object.children, true);
-    if (intersects.length) {
-      this.scaleUp();
-    } else {
-      this.scaleDown();
-    }
+    setTimeout(() => {
+      if (intersects.length) {
+        this.scaleUp();
+      } else {
+        this.scaleDown();
+      }
+    }, 150);
   }
 }
