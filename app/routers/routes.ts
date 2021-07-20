@@ -32,38 +32,33 @@ const pcRoutes: IRouteConfig[] = [
     code: 'three.js',
     children: [
       {
-        title: 'Creating a scene',
-        link: '/threejs/creating-a-scene',
-        component: (): ILoadComponent => import('src/components/threejs/creating-a-scene'),
-      },
-      {
-        title: 'Drawing a line',
-        link: '/threejs/drawing-a-line',
-        component: (): ILoadComponent => import('src/components/threejs/drawing-lines'),
-      },
-      {
-        title: 'Update BufferGeometry',
-        link: '/threejs/update-buffer-geometry',
-        component: (): ILoadComponent => import('src/components/threejs/update-buffer-geometry'),
-      },
-      {
-        title: 'Use Post-processing',
-        link: '/threejs/use-post-processing',
-        component: (): ILoadComponent => import('src/components/threejs/use-post-processing'),
-      },
-      {
         title: 'Demos',
         code: 'threejs-demos',
         children: [
           {
-            title: 'Sierpinski 2d (points)',
-            link: '/threejs/demos/sierpinski-2d-points',
-            component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-points'),
+            title: 'Creating a scene',
+            link: '/threejs/demos/creating-a-scene',
+            component: (): ILoadComponent => import('src/components/threejs/creating-a-scene'),
           },
           {
-            title: 'Sierpinski 2d (lines)',
-            link: '/threejs/demos/sierpinski-2d-lines',
-            component: (): ILoadComponent => import('src/components/demos/sierpinski/sierpinski-2d-lines'),
+            title: 'Drawing a line',
+            link: '/threejs/demos/drawing-a-line',
+            component: (): ILoadComponent => import('src/components/threejs/drawing-lines'),
+          },
+          {
+            title: 'Update BufferGeometry',
+            link: '/threejs/demos/update-buffer-geometry',
+            component: (): ILoadComponent => import('src/components/threejs/update-buffer-geometry'),
+          },
+          {
+            title: 'Use Post-processing',
+            link: '/threejs/demos/use-post-processing',
+            component: (): ILoadComponent => import('src/components/threejs/use-post-processing'),
+          },
+          {
+            title: 'Sierpinski',
+            link: '/threejs/demos/sierpinski',
+            component: (): ILoadComponent => import('src/components/threejs/sierpinski'),
           },
           {
             title: 'Swap cards',
@@ -83,28 +78,13 @@ const pcRoutes: IRouteConfig[] = [
         code: 'original-webgl-demos',
         children: [
           {
-            title: 'Sierpinski 2d (points)',
-            link: '/original-webgl/sierpinski-2d-points',
-            component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-2d-points'),
-          },
-          {
-            title: 'Sierpinski 2d (lines)',
-            link: '/original-webgl/sierpinski-2d-lines',
-            component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-2d-lines'),
-          },
-          {
-            title: 'Sierpinski 3d (points)',
-            link: '/original-webgl/sierpinski-3d-points',
-            component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-3d-points'),
-          },
-          {
-            title: 'Sierpinski 3d (lines)',
-            link: '/original-webgl/sierpinski-3d-lines',
-            component: (): ILoadComponent => import('src/components/original-webgl/sierpinski/sierpinski-3d-lines'),
+            title: 'Sierpinski',
+            link: '/original-webgl/demos/sierpinski',
+            component: (): ILoadComponent => import('src/components/original-webgl/sierpinski'),
           },
           {
             title: 'Rotating Square',
-            link: '/original-webgl/rotating-square',
+            link: '/original-webgl/demos/rotating-square',
             component: (): ILoadComponent => import('src/components/original-webgl/rotating-square'),
           },
         ],
