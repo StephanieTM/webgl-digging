@@ -87,6 +87,11 @@ const pcRoutes: IRouteConfig[] = [
             link: '/original-webgl/demos/rotating-square',
             component: (): ILoadComponent => import('src/components/original-webgl/rotating-square'),
           },
+          {
+            title: 'Drawing Board',
+            link: '/original-webgl/demos/drawing-board',
+            component: (): ILoadComponent => import('src/components/original-webgl/drawing-board'),
+          },
         ],
       },
     ],
