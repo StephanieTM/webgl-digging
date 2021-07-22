@@ -18,7 +18,9 @@ export default function Comp(): JSX.Element {
   const renderFunc = useCallback(() => {
     if (gl) {
       gl.clear(gl.COLOR_BUFFER_BIT);
-      index.current && gl.drawArrays(gl.POINTS, 0, index.current);
+      if (index.current > 0) {
+        gl.drawArrays(gl.POINTS, 0, index.current);
+      }
     }
   }, [gl]);
 
@@ -26,19 +28,21 @@ export default function Comp(): JSX.Element {
     const curCanvasRef = canvasRef.current;
     function onMouseDown(event: MouseEvent): void {
       if (gl && canvasRef.current) {
-        const vertex = vec2(
-          2 * ( (event.clientX - canvasRef.current.offsetLeft) / canvasRef.current.clientWidth ) - 1,
-          -2 * ( (event.clientY - canvasRef.current.offsetTop) / canvasRef.current.clientHeight ) + 1
-        );
-        const color = vec4(normalizeHexColor(randomHexColor()).concat(1));
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer.current);
-        gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index.current, flatten(vertex));
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer.current);
-        gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index.current, flatten(color));
-
-        index.current++;
+        if (index.current < maxNumVertices) {
+          const vertex = vec2(
+            2 * ( (event.clientX - canvasRef.current.offsetLeft) / canvasRef.current.clientWidth ) - 1,
+            -2 * ( (event.clientY - canvasRef.current.offsetTop) / canvasRef.current.clientHeight ) + 1
+          );
+          const color = vec4(normalizeHexColor(randomHexColor()).concat(1));
+  
+          gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer.current);
+          gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index.current, flatten(vertex));
+  
+          gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer.current);
+          gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index.current, flatten(color));
+  
+          index.current += 1;
+        }
       }
     }
 
@@ -65,7 +69,7 @@ export default function Comp(): JSX.Element {
 
       cBuffer.current = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer.current);
-      gl.bufferData(gl.ARRAY_BUFFER, 16 * maxNumVertices, gl.STATIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, 16 * (maxNumVertices + 3), gl.STATIC_DRAW);
 
       const vColor = gl.getAttribLocation(program, 'vColor');
       gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
