@@ -23,22 +23,15 @@ export default function Comp(): JSX.Element {
     if (gl) {
       gl.clear(gl.COLOR_BUFFER_BIT);
 
-      if (gl && canvasRef.current && redraw.current && mouse.current) {
-        if (index.current < maxNumVertices) {
-
-          gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer.current);
-          gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index.current, flatten(mouse.current));
-
-          gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer.current);
-          gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index.current, flatten(curColor.current));
-
-          index.current += 1;
-        }
-      }
-
       if (index.current > 0) {
-        for (let i = 1; i < breakPoint.current.length; i += 1) {
-          gl.drawArrays(gl.LINE_STRIP, breakPoint.current[i - 1], breakPoint.current[i]);
+        for (let i = 0; i < breakPoint.current.length - 1; i += 1) {
+          const startPoint = breakPoint.current[i] + 1;
+          const numPoints = breakPoint.current[i + 1] - breakPoint.current[i] - 1;
+          if (numPoints > 1) {
+            gl.drawArrays(gl.LINE_STRIP, startPoint, numPoints);
+          } else if (numPoints === 1) {
+            gl.drawArrays(gl.POINTS, startPoint, numPoints);
+          }
         }
       }
     }
@@ -46,13 +39,37 @@ export default function Comp(): JSX.Element {
 
   useEffect(() => {
     const curCanvasRef = canvasRef.current;
+    function addPoint(addExtraBreakPoint = false): void {
+      if (gl && mouse.current && index.current < maxNumVertices) {
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer.current);
+        gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index.current, flatten(mouse.current));
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer.current);
+        gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index.current, flatten(curColor.current));
+
+        index.current += 1;
+        if (breakPoint.current.length > 1) {
+          breakPoint.current.pop();
+        }
+        breakPoint.current.push(index.current);
+        if (addExtraBreakPoint) {
+          breakPoint.current.push(-1);
+        }
+      }
+    }
     function onMouseDown(): void {
       redraw.current = true;
+      if (gl && canvasRef.current && redraw.current && mouse.current) {
+        addPoint(false);
+      }
     }
     function onMouseUp(): void {
       redraw.current = false;
       curColor.current = vec4(normalizeHexColor(randomHexColor()).concat(1));
-      breakPoint.current.push(index.current);
+      if (gl && canvasRef.current && mouse.current) {
+        addPoint(true);
+      }
     }
     function onMouseMove(event: MouseEvent): void {
       if (canvasRef.current) {
@@ -60,6 +77,9 @@ export default function Comp(): JSX.Element {
           2 * ( (event.clientX - canvasRef.current.offsetLeft) / canvasRef.current.clientWidth ) - 1,
           -2 * ( (event.clientY - canvasRef.current.offsetTop) / canvasRef.current.clientHeight ) + 1
         );
+      }
+      if (gl && canvasRef.current && redraw.current && mouse.current) {
+        addPoint(false);
       }
     }
 
@@ -105,7 +125,7 @@ export default function Comp(): JSX.Element {
   useRender(renderFunc);
 
   return (
-    <div>
+    <div style={{ padding: '20px' }}>
       <canvas ref={canvasRef} width={1024} height={512}></canvas>
     </div>
   );
