@@ -1,5 +1,5 @@
-import { IVec } from './vector';
-import { IMat } from './matrix';
+import { IVec, vec2, vec3, vec4 } from './vector';
+import { IMat, mat2, mat3, mat4 } from './matrix';
 
 /**
  * 判断两个向量是否相等
@@ -263,3 +263,17 @@ export function flatten(v: IMat|IVec|IVec[]): Float32Array {
 
   return floats;
 }
+
+// -------------------------------------------------------------------------------------------------
+
+/**
+ * 矩阵/数组的大小
+ */
+export const sizeof = {
+  'vec2': new Float32Array(flatten(vec2())).byteLength,
+  'vec3': new Float32Array(flatten(vec3())).byteLength,
+  'vec4': new Float32Array(flatten(vec4())).byteLength,
+  'mat2': new Float32Array(flatten(mat2())).byteLength,
+  'mat3': new Float32Array(flatten(mat3())).byteLength,
+  'mat4': new Float32Array(flatten(mat4())).byteLength,
+};
