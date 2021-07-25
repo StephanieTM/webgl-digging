@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useRender, useShaders, useWebGL } from 'src/components/original-webgl/hooks';
 import { normalizeHexColor, randomHexColor } from 'src/utils';
-import { flatten, IVec2, vec2, vec4 } from 'src/lib/mvjs';
-import vShader from './shaders/drag-and-draw-lines/vshader.glsl';
-import fShader from './shaders/drag-and-draw-lines/fshader.glsl';
+import { flatten, IVec2, sizeof, vec2, vec4 } from 'src/lib/mvjs';
+import vShader from './shaders/lines/vshader.glsl';
+import fShader from './shaders/lines/fshader.glsl';
 
-const maxNumTriangles = 500;
-const maxNumVertices  = 3 * maxNumTriangles;
+const maxNumVertices  = 15000;
 
 export default function Comp(): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -17,7 +16,7 @@ export default function Comp(): JSX.Element {
   const index = useRef<number>(0);
   const redraw = useRef<boolean>(false);
   const breakPoint = useRef<number[]>([0]);
-  const curColor = useRef(vec4(normalizeHexColor(randomHexColor()).concat(1)));
+  const curColor = useRef(vec4(...normalizeHexColor(randomHexColor()).concat(1)));
   const mouse = useRef<IVec2|undefined>(undefined);
   const renderFunc = useCallback(() => {
     if (gl) {
@@ -43,10 +42,10 @@ export default function Comp(): JSX.Element {
       if (gl && mouse.current && index.current < maxNumVertices) {
 
         gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer.current);
-        gl.bufferSubData(gl.ARRAY_BUFFER, 8 * index.current, flatten(mouse.current));
+        gl.bufferSubData(gl.ARRAY_BUFFER, sizeof.vec2 * index.current, flatten(mouse.current));
 
         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer.current);
-        gl.bufferSubData(gl.ARRAY_BUFFER, 16 * index.current, flatten(curColor.current));
+        gl.bufferSubData(gl.ARRAY_BUFFER, sizeof.vec4 * index.current, flatten(curColor.current));
 
         index.current += 1;
         if (breakPoint.current.length > 1) {
@@ -66,9 +65,10 @@ export default function Comp(): JSX.Element {
     }
     function onMouseUp(): void {
       redraw.current = false;
-      curColor.current = vec4(normalizeHexColor(randomHexColor()).concat(1));
+      curColor.current = vec4(...normalizeHexColor(randomHexColor()).concat(1));
       if (gl && canvasRef.current && mouse.current) {
         addPoint(true);
+        curColor.current = vec4(...normalizeHexColor(randomHexColor()).concat(1));
       }
     }
     function onMouseMove(event: MouseEvent): void {
@@ -106,7 +106,7 @@ export default function Comp(): JSX.Element {
 
       vBuffer.current = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer.current);
-      gl.bufferData(gl.ARRAY_BUFFER, 8 * maxNumVertices, gl.STATIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, sizeof.vec2 * maxNumVertices, gl.STATIC_DRAW);
 
       const vPosition = gl.getAttribLocation(program, 'vPosition');
       gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
@@ -114,7 +114,7 @@ export default function Comp(): JSX.Element {
 
       cBuffer.current = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer.current);
-      gl.bufferData(gl.ARRAY_BUFFER, 16 * (maxNumVertices + 3), gl.STATIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, sizeof.vec4 * maxNumVertices, gl.STATIC_DRAW);
 
       const vColor = gl.getAttribLocation(program, 'vColor');
       gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
