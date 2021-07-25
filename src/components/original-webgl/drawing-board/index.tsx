@@ -1,7 +1,8 @@
 import React from 'react';
 import { Tabs } from 'antd';
-import ClickAndDrawDots from './click-and-draw-dots';
-import DragAndDrawLines from './drag-and-draw-lines';
+import Dots from './dots';
+import Lines from './lines';
+import Triangles from './triangles';
 
 const { TabPane } = Tabs;
 
@@ -11,11 +12,14 @@ export default function Comp(): JSX.Element {
     <div style={{ padding: '20px' }}>
       <h1>Drawing Board</h1>
       <Tabs tabPosition="right">
-        <TabPane tab="Draw Dots" key="click-and-draw-dots">
-          <ClickAndDrawDots />
+        <TabPane tab="Draw Dots" key="draw-dots">
+          <Dots />
         </TabPane>
-        <TabPane tab="Draw Lines" key="drag-and-draw-lines">
-          <DragAndDrawLines />
+        <TabPane tab="Draw Lines" key="draw-lines">
+          <Lines />
+        </TabPane>
+        <TabPane tab="Draw Triangles" key="draw-triangles">
+          <Triangles />
         </TabPane>
       </Tabs>
     </div>
