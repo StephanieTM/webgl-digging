@@ -1,5 +1,6 @@
 import { IVec, vec2, vec3, vec4 } from './vector';
 import { IMat, mat2, mat3, mat4 } from './matrix';
+import { transpose } from './mat-funcs';
 
 /**
  * 判断两个向量是否相等
@@ -235,8 +236,8 @@ export function mult<T extends IVec|IMat>(u: T, v: T): T {
  */
 export function flatten(v: IMat|IVec|IVec[]): Float32Array {
   if ((v as IMat).matrix === true) {
-    // TODO
-    // v = transpose(v);
+    // WebGL使用列主序描述矩阵，MV.js使用行主序描述矩阵，在向GPU发送数组时，将矩阵进行转置
+    v = transpose(v as IMat);
   }
 
   let n = v.length;
@@ -248,6 +249,7 @@ export function flatten(v: IMat|IVec|IVec[]): Float32Array {
   }
 
   const floats = new Float32Array(n);
+
   if (elemsAreArrays) {
     let idx = 0;
     for (let i = 0; i < v.length; i += 1) {
