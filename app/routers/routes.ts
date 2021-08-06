@@ -92,6 +92,11 @@ const pcRoutes: IRouteConfig[] = [
             link: '/original-webgl/demos/drawing-board',
             component: (): ILoadComponent => import('src/components/original-webgl/drawing-board'),
           },
+          {
+            title: 'Cubes',
+            link: '/original-webgl/demos/cubes',
+            component: (): ILoadComponent => import('src/components/original-webgl/cubes'),
+          },
         ],
       },
     ],
