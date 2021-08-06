@@ -1,10 +1,18 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Col, Row, Radio } from 'antd';
 import { useWebGL, useRender, useShaders } from 'src/components/original-webgl/hooks';
 import { vec4, IVec4, flatten } from 'src/lib/mvjs';
 import vShader from './shaders/colored-cube/vshader.glsl';
 import fShader from './shaders/colored-cube/fshader.glsl';
 
-const numVertices = 6 * 6; // 6个面，每个面由两个三角形组成，使用gl.TRIANGLES绘制，需要6个顶点
+enum Axis {
+  xAxis = 0,
+  yAxis = 1,
+  zAxis = 2,
+}
+
+const { Group: RadioGroup, Button: RadioButton } = Radio;
+// const numVertices = 6 * 6; // 6个面，每个面由两个三角形组成，使用gl.TRIANGLES绘制，需要6个顶点
 const vertices = [
   vec4(-0.5, -0.5,  0.5,  1.0),
   vec4(-0.5,  0.5,  0.5,  1.0),
@@ -32,12 +40,21 @@ export default function ColoredCube(): JSX.Element {
   const program = useShaders(gl, vShader, fShader);
   const points = useRef<IVec4[]>([]);
   const colors = useRef<IVec4[]>([]);
+  const theta = useRef<number[]>([0, 0, 0]);
+  const thetaLoc = useRef<WebGLUniformLocation|null>(null);
+  const [axis, setAxis] = useState<Axis>(Axis.xAxis);
   const renderFunc = useCallback(() => {
-    if (gl) {
+    if (gl && program) {
       gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-      gl.drawArrays(gl.TRIANGLES, 0, numVertices);
+
+      theta.current[axis] += 2;
+      gl.uniform3fv(thetaLoc.current, theta.current);
+      
+      if (points.current.length) {
+        gl.drawArrays(gl.TRIANGLES, 0, points.current.length);
+      }
     }
-  }, [gl]);
+  }, [gl, axis, program]);
 
   useEffect(() => {
     function quad(a: number, b: number, c: number, d: number): void {
@@ -45,6 +62,7 @@ export default function ColoredCube(): JSX.Element {
       for (let i = 0; i < indices.length; i += 1) {
         points.current.push(vertices[indices[i]]);
         colors.current.push(vertexColors[indices[i]]);
+        // colors.current.push(vertexColors[a]);
       }
     }
 
@@ -82,6 +100,8 @@ export default function ColoredCube(): JSX.Element {
       const vColor = gl.getAttribLocation(program, 'vColor');
       gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
       gl.enableVertexAttribArray(vColor);
+
+      thetaLoc.current = gl.getUniformLocation(program, "theta"); 
     }
   }, [gl, program]);
 
@@ -89,7 +109,17 @@ export default function ColoredCube(): JSX.Element {
 
   return (
     <div style={{ padding: '20px' }}>
-      <canvas ref={canvasRef} width={1024} height={512}></canvas>
+      <Row gutter={10}>
+        <Col style={{ marginRight: '20px' }}>Direction: </Col>
+        <Col span={8}>
+          <RadioGroup value={axis} onChange={(e) => setAxis(e.target.value)} size="small">
+            <RadioButton value={Axis.xAxis}>Rotate X</RadioButton>
+            <RadioButton value={Axis.yAxis}>Rotate Y</RadioButton>
+            <RadioButton value={Axis.zAxis}>Rotate Z</RadioButton>
+          </RadioGroup>
+        </Col>
+      </Row>
+      <canvas ref={canvasRef} width={512} height={512}></canvas>
     </div>
   );
 }
