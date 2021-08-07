@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Col, Row, Radio } from 'antd';
-import { useWebGL, useRender, useShaders } from 'src/components/original-webgl/hooks';
-import { vec4, IVec4, flatten } from 'src/lib/mvjs';
+import { useShaders, useWebGL, useRender } from 'src/components/original-webgl/hooks';
+import { flatten, vec4 } from 'src/lib/mvjs';
 import vShader from './shaders/colored-cube/vshader.glsl';
 import fShader from './shaders/colored-cube/fshader.glsl';
 
@@ -12,7 +12,7 @@ enum Axis {
 }
 
 const { Group: RadioGroup, Button: RadioButton } = Radio;
-// const numVertices = 6 * 6; // 6个面，每个面由两个三角形组成，使用gl.TRIANGLES绘制，需要6个顶点
+const numVertices = 6 * 6; // 6个面，每个面由两个三角形组成，使用gl.TRIANGLES绘制，需要6个顶点
 const vertices = [
   vec4(-0.5, -0.5,  0.5,  1.0),
   vec4(-0.5,  0.5,  0.5,  1.0),
@@ -33,14 +33,26 @@ const vertexColors = [
   vec4( 1.0,  1.0,  1.0,  1.0), // 白
   vec4( 0.0,  1.0,  1.0,  1.0), // 青
 ];
+const indices = [
+  1, 0, 3,
+  1, 3, 2,
+  2, 3, 7,
+  2, 7, 6,
+  3, 0, 4,
+  3, 4, 7,
+  6, 5, 1,
+  6, 1, 2,
+  4, 5, 6,
+  4, 6, 7,
+  5, 4, 0,
+  5, 0, 1,
+];
 
-// 使用drawArrays的版本，需要编写quad和cube方法来组织传输给GPU的顶点数据
+// 使用drawElements的版本，无需编写quad和cube方法，只需定义索引数组
 export default function ColoredCube(): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gl = useWebGL(canvasRef);
   const program = useShaders(gl, vShader, fShader);
-  const points = useRef<IVec4[]>([]);
-  const colors = useRef<IVec4[]>([]);
   const theta = useRef<number[]>([0, 0, 0]);
   const thetaLoc = useRef<WebGLUniformLocation|null>(null);
   const [axis, setAxis] = useState<Axis>(Axis.xAxis);
@@ -50,37 +62,10 @@ export default function ColoredCube(): JSX.Element {
 
       theta.current[axis] += 1;
       gl.uniform3fv(thetaLoc.current, theta.current);
-      
-      if (points.current.length) {
-        gl.drawArrays(gl.TRIANGLES, 0, points.current.length);
-      }
-    }
-  }, [gl, axis, program]);
 
-  useEffect(() => {
-    /**
-     * 生成绘制一个面（两个三角形）所需的顶点和颜色数据，四个顶点的顺序需要满足右手定律，即朝外的面逆时针顺序
-     */
-    function quad(a: number, b: number, c: number, d: number): void {
-      const indices = [a, b, c, a, c, d];
-      for (let i = 0; i < indices.length; i += 1) {
-        points.current.push(vertices[indices[i]]);
-        colors.current.push(vertexColors[indices[i]]);
-        // colors.current.push(vertexColors[a]);
-      }
+      gl.drawElements(gl.TRIANGLES, numVertices, gl.UNSIGNED_BYTE, 0);
     }
-
-    function colorCube(): void {
-      quad(1, 0, 3, 2);
-      quad(2, 3, 7, 6);
-      quad(3, 0, 4, 7);
-      quad(6, 5, 1, 2);
-      quad(4, 5, 6, 7);
-      quad(5, 4, 0, 1);
-    }
-
-    colorCube();
-  }, []);
+  }, [gl, program, axis]);
 
   useEffect(() => {
     if (gl && program && canvasRef.current) {
@@ -91,7 +76,7 @@ export default function ColoredCube(): JSX.Element {
 
       const vBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
-      gl.bufferData(gl.ARRAY_BUFFER, flatten(points.current), gl.STATIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, flatten(vertices), gl.STATIC_DRAW);
 
       const vPosition = gl.getAttribLocation(program, 'vPosition');
       gl.vertexAttribPointer(vPosition, 4, gl.FLOAT, false, 0, 0);
@@ -99,13 +84,17 @@ export default function ColoredCube(): JSX.Element {
 
       const cBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-      gl.bufferData(gl.ARRAY_BUFFER, flatten(colors.current), gl.STATIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, flatten(vertexColors), gl.STATIC_DRAW);
 
       const vColor = gl.getAttribLocation(program, 'vColor');
       gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
       gl.enableVertexAttribArray(vColor);
 
-      thetaLoc.current = gl.getUniformLocation(program, 'theta'); 
+      const iBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer);
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(indices), gl.STATIC_DRAW);
+
+      thetaLoc.current = gl.getUniformLocation(program, 'theta');
     }
   }, [gl, program]);
 
@@ -116,7 +105,7 @@ export default function ColoredCube(): JSX.Element {
       <Row gutter={10}>
         <Col style={{ marginRight: '20px' }}>Direction: </Col>
         <Col span={8}>
-          <RadioGroup value={axis} onChange={(e) => setAxis(e.target.value)} size="small">
+          <RadioGroup value={axis} onChange={e => setAxis(e.target.value)} size="small">
             <RadioButton value={Axis.xAxis}>Rotate X</RadioButton>
             <RadioButton value={Axis.yAxis}>Rotate Y</RadioButton>
             <RadioButton value={Axis.zAxis}>Rotate Z</RadioButton>
