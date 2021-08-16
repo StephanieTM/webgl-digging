@@ -21,11 +21,13 @@ export function mat2(...args: unknown[]): IMat2 {
   const m: IMat2 = [] as unknown as IMat2;
   switch (v.length) {
     case 0:
+      // 0初始值，创建单位矩阵
       v[0] = 1;
       m.push(vec2( v[0],  0.0 ));
       m.push(vec2(  0.0, v[0] ));
       break;
     case 1:
+      // 1初始值，创建对角矩阵
       m.push(vec2( v[0],  0.0 ));
       m.push(vec2(  0.0, v[0] ));
       break;
@@ -52,12 +54,14 @@ export function mat3(...args: unknown[]): IMat3 {
   const m: IMat3 = [] as unknown as IMat3;
   switch (v.length) {
     case 0:
+      // 0初始值，创建单位矩阵
       v[0] = 1;
       m.push(vec3( v[0],  0.0,  0.0 ));
       m.push(vec3(  0.0, v[0],  0.0 ));
       m.push(vec3(  0.0,  0.0, v[0] ));
       break;
     case 1:
+      // 1初始值，创建对角矩阵
       m.push(vec3( v[0],  0.0,  0.0 ));
       m.push(vec3(  0.0, v[0],  0.0 ));
       m.push(vec3(  0.0,  0.0, v[0] ));
@@ -87,6 +91,7 @@ export function mat4(...args: unknown[]): IMat4 {
   const m: IMat4 = [] as unknown as IMat4;
   switch (v.length) {
     case 0:
+      // 0初始值，创建单位矩阵
       v[0] = 1;
       m.push(vec4( v[0],  0.0,  0.0,  0.0 ));
       m.push(vec4(  0.0, v[0],  0.0,  0.0 ));
@@ -94,6 +99,7 @@ export function mat4(...args: unknown[]): IMat4 {
       m.push(vec4(  0.0,  0.0,  0.0, v[0] ));
       break;
     case 1:
+      // 1初始值，创建对角矩阵
       m.push(vec4( v[0],  0.0,  0.0,  0.0 ));
       m.push(vec4(  0.0, v[0],  0.0,  0.0 ));
       m.push(vec4(  0.0,  0.0, v[0],  0.0 ));
