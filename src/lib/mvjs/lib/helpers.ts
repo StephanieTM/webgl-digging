@@ -4,7 +4,7 @@
  * @returns 数组
  */
 export function _argumentsToArray<T extends unknown[]>(args: T): number[] {
-  return ([] as unknown as number[]).concat([], args.slice() as number[]) as number[];
+  return ([] as unknown as number[]).concat(...args.slice() as number[]) as number[];
 }
 
 /**
