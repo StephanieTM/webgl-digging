@@ -310,3 +310,25 @@ export function inverse<T extends IMat>(m: T): T {
   if (m.length === 4) return inverse4(m as IMat4) as T;
   throw new Error('inverse(): dimension not supported');
 }
+
+/**
+ * 求矩阵的标准化结果
+ * @param m 矩阵
+ * @param excludeLastItems 是否忽略最后一列元素
+ * @returns 标准化后的矩阵
+ */
+export function normalMatrix(m: IMat4, excludeLastItems = false): IMat4|IMat3 {
+  const a = inverse(transpose(m));
+  if (excludeLastItems !== true) {
+    return a;
+  } else {
+    const b = mat3();
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j < 3; j += 1) {
+        b[i][j] = a[i][j];
+      }
+    }
+
+    return b;
+  }
+}
