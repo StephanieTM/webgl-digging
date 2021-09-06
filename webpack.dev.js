@@ -1,6 +1,7 @@
 const { merge } = require('webpack-merge');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = require('./webpack.common');
 
 module.exports = merge(config, {
@@ -32,6 +33,12 @@ module.exports = merge(config, {
           './src/**/*.{ts,tsx}',
         ],
       },
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'views/index.html',
+      hash: true,
+      inject: false,
+      template: './app/views/index.ejs',
     }),
     new MiniCssExtractPlugin({
       filename: 'assets/styles/[name].css',

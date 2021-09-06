@@ -94,13 +94,6 @@ module.exports = {
   plugins: [
     // clean dir before build
     new CleanWebpackPlugin(),
-    // generate index.html file
-    new HtmlWebpackPlugin({
-      filename: 'views/index.html',
-      hash: true,
-      inject: false,
-      template: './app/views/index.ejs',
-    }),
     new CopyWebpackPlugin({
       patterns: [
         { from: 'assets/images', to: 'assets/images' },
