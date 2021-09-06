@@ -11,7 +11,7 @@ export default function AppLayout(): JSX.Element {
   const { isMobile } = GlobalStore.useContainer();
 
   return (
-    <Router>
+    <Router basename="/webgl-digging">
       {isMobile ? <MobileLayout menus={mobileRoutes} /> : <PCLayout menus={pcRoutes} />}
     </Router>
   );

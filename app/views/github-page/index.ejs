@@ -4,13 +4,27 @@
 <head>
   <meta charset="utf-8">
   <title>WebGL Digging</title>
-  <link href="/assets/images/juice.png" type="image/x-icon" rel="shortcut icon">
+  <link href="/webgl-digging/assets/images/juice.png" type="image/x-icon" rel="shortcut icon">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
   <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
   <meta name="format-detection" content="telephone=no">
+
+  <script type="text/javascript">
+    (function(l) {
+      if (l.search[1] === '/' ) {
+        var decoded = l.search.slice(1).split('&').map(function(s) { 
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    }(window.location))
+  </script>
+
   <%= htmlWebpackPlugin.tags.headTags %>
 </head>
 <body>

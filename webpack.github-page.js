@@ -1,4 +1,5 @@
 const { merge } = require('webpack-merge');
+const path = require('path');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -8,6 +9,8 @@ const config = require('./webpack.common');
 module.exports = merge(config, {
   mode: 'production',
   output: {
+    path: path.resolve(__dirname, 'dist_github_page'),
+    publicPath: '/webgl-digging/',
     filename: 'assets/scripts/[name].[chunkhash].js',
     chunkFilename: 'assets/scripts/[name].[chunkhash].js',
   },
@@ -17,10 +20,16 @@ module.exports = merge(config, {
       chunkFilename: 'assets/styles/[id].[contenthash].css',
     }),
     new HtmlWebpackPlugin({
-      filename: 'views/index.html',
+      filename: 'index.html',
       hash: true,
       inject: false,
-      template: './app/views/index.ejs',
+      template: './app/views/github-page/index.ejs',
+    }),
+    new HtmlWebpackPlugin({
+      filename: '404.html',
+      hash: true,
+      inject: false,
+      template: './app/views/github-page/404.ejs',
     }),
     // new BundleAnalyzerPlugin(),
   ],

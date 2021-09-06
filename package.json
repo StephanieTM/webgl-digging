@@ -6,6 +6,7 @@
     "postinstall": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-dev": "webpack --config webpack.dev.js",
+    "build-github-page": "NODE_ENV=production webpack --mode production --config webpack.github-page.js",
     "build": "NODE_ENV=production webpack --mode production --config webpack.prod.js",
     "watch": "webpack --watch --config webpack.dev.js",
     "dev": "node dev-server.js",
