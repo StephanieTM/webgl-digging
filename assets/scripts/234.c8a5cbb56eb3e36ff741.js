@@ -1,0 +1,1 @@
+(self.webpackChunkfe_proj=self.webpackChunkfe_proj||[]).push([[234],{9234:function(e,t,n){"use strict";n.r(t),n.d(t,{default:function(){return r}});var a=n(67294);function r(){return a.createElement("div",{className:"homepage"},a.createElement("div",{className:"title"},"👀"))}}}]);
