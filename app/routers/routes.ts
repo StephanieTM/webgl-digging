@@ -97,6 +97,11 @@ const pcRoutes: IRouteConfig[] = [
             link: '/original-webgl/demos/cubes',
             component: (): ILoadComponent => import('src/components/original-webgl/cubes'),
           },
+          {
+            title: 'Trackball',
+            link: '/original-webgl/demos/trackball',
+            component: (): ILoadComponent => import('src/components/original-webgl/trackball'),
+          },
         ],
       },
     ],
